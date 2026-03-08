@@ -10,25 +10,45 @@
       .loader-container { height: 100dvh; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; }
       .spinner { width: 32px; height: 32px; border: 3px solid rgba(0,0,0,0.05); border-radius: 50%; border-top-color: #111; animation: spin 1s ease-in-out infinite; }
       @keyframes spin { to { transform: rotate(360deg); } }
-      #error-msg { display: none; margin-top: 24px; color: #666; font-size: 13px; text-align: center; max-width: 320px; line-height: 1.5; background: white; padding: 16px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+      #error-msg { display: none; margin-top: 24px; color: #666; font-size: 13px; text-align: center; max-width: 320px; line-height: 1.5; background: white; padding: 16px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); word-break: break-word; }
     </style>
+    <script>
+      window.onerror = function(msg, url, line, col, error) {
+        var err = document.getElementById('error-msg');
+        if(err) {
+          err.style.display = 'block';
+          err.innerHTML = '<strong style="color:red">JS Error:</strong> ' + msg + '<br><br>Line: ' + line + '<br>URL: ' + url;
+        }
+      };
+      window.addEventListener('unhandledrejection', function(event) {
+        var err = document.getElementById('error-msg');
+        if(err) {
+          err.style.display = 'block';
+          err.innerHTML = '<strong style="color:red">Promise Error:</strong> ' + (event.reason && event.reason.message ? event.reason.message : event.reason);
+        }
+      });
+    </script>
   </head>
   <body>
     <div id="root">
       <div class="loader-container">
         <div class="spinner"></div>
         <div id="error-msg">
-          <strong style="color: #111; font-size: 14px;">Die App kann nicht gestartet werden.</strong><br/><br/>
-          Hast du den unfertigen Quellcode hochgeladen?<br/><br/>
-          Du musst zuerst <b>npm run build</b> ausführen und dann <u>nur</u> den Inhalt des <b>dist</b>-Ordners auf deinen Webserver hochladen!
+          <strong style="color: #111; font-size: 14px;">Die App lädt nicht.</strong><br/><br/>
+          Das liegt zu 100% daran, dass auf deinem Server noch der alte Quellcode liegt.<br/><br/>
+          <b>Lösung:</b><br/>
+          1. Lösche die alte <code>index.html</code> auf deinem Server.<br/>
+          2. Lade die <code>fertige-website.html</code> hoch.<br/>
+          3. Benenne sie auf dem Server in <code>index.html</code> um.
         </div>
       </div>
     </div>
     <script>
-      // Show error message if React hasn't mounted after 3 seconds
       setTimeout(() => {
         const errorMsg = document.getElementById('error-msg');
-        if (errorMsg) errorMsg.style.display = 'block';
+        if (errorMsg && errorMsg.style.display !== 'block') {
+          errorMsg.style.display = 'block';
+        }
       }, 3000);
     </script>
     <script type="module" src="/src/main.tsx"></script>
