@@ -76,30 +76,44 @@ END:VCARD`;
           </p>
         </motion.div>
 
-        {/* Quick Actions (Minimalist Circles) */}
+        {/* Quick Actions (Large & Colored for Accessibility) */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.8, ease: smoothEase }}
-          className="flex gap-4 mt-8"
+          className="grid grid-cols-3 gap-3 mt-8 w-full"
         >
-          {[
-            { icon: Phone, href: `tel:${phoneNumber}` },
-            { icon: MessageCircle, href: `https://wa.me/${phoneNumber.replace("+", "")}` },
-            { icon: Mail, href: `mailto:${email}` },
-          ].map((item, i) => (
-            <motion.a
-              key={i}
-              href={item.href}
-              target={item.icon === MessageCircle ? "_blank" : "_self"}
-              rel="noopener noreferrer"
-              whileHover={{ scale: 1.05, backgroundColor: "rgba(0,0,0,0.06)" }}
-              whileTap={{ scale: 0.95 }}
-              className="w-12 h-12 rounded-full bg-black/[0.03] flex items-center justify-center text-black/70 transition-colors"
-            >
-              <item.icon className="w-[18px] h-[18px]" strokeWidth={2} />
-            </motion.a>
-          ))}
+          <motion.a
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.95 }}
+            href={`tel:${phoneNumber}`}
+            className="flex flex-col items-center justify-center gap-2 py-4 rounded-2xl bg-emerald-500 text-white shadow-[0_8px_16px_-6px_rgba(16,185,129,0.4)] transition-transform"
+          >
+            <Phone className="w-7 h-7" strokeWidth={2} />
+            <span className="text-[11px] font-semibold tracking-wide">Anrufen</span>
+          </motion.a>
+          
+          <motion.a
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.95 }}
+            href={`https://wa.me/${phoneNumber.replace("+", "")}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex flex-col items-center justify-center gap-2 py-4 rounded-2xl bg-[#25D366] text-white shadow-[0_8px_16px_-6px_rgba(37,211,102,0.4)] transition-transform"
+          >
+            <MessageCircle className="w-7 h-7" strokeWidth={2} />
+            <span className="text-[11px] font-semibold tracking-wide">WhatsApp</span>
+          </motion.a>
+
+          <motion.a
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.95 }}
+            href={`mailto:${email}`}
+            className="flex flex-col items-center justify-center gap-2 py-4 rounded-2xl bg-blue-500 text-white shadow-[0_8px_16px_-6px_rgba(59,130,246,0.4)] transition-transform"
+          >
+            <Mail className="w-7 h-7" strokeWidth={2} />
+            <span className="text-[11px] font-semibold tracking-wide">E-Mail</span>
+          </motion.a>
         </motion.div>
 
         {/* Primary Action (Save Contact) */}
