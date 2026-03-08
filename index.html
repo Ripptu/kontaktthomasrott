@@ -7,7 +7,21 @@
     <title>Thomas Rott | Facility Management</title>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div style="padding: 40px 20px; font-family: sans-serif; text-align: center; color: #111;">
+        <h3>Lade digitale Visitenkarte...</h3>
+        <p style="color: #666; font-size: 14px;">Falls diese Meldung stehen bleibt, überprüfe bitte deine Internetverbindung oder das Hosting.</p>
+        <div id="file-error" style="display: none; margin-top: 20px; padding: 15px; background: #fee2e2; color: #991b1b; border-radius: 8px; border: 1px solid #f87171;">
+          <strong>Fehler:</strong> Du hast die Datei direkt vom PC geöffnet (Doppelklick). <br/><br/>
+          Moderne Websites müssen auf einen Webserver hochgeladen werden (z.B. Vercel, Netlify oder FTP), damit sie funktionieren!
+        </div>
+      </div>
+    </div>
+    <script>
+      if (window.location.protocol === 'file:') {
+        document.getElementById('file-error').style.display = 'block';
+      }
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
