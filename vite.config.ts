@@ -9,6 +9,15 @@ export default defineConfig(({mode}) => {
   return {
     base: './',
     plugins: [react(), tailwindcss(), viteSingleFile()],
+    build: {
+      target: 'es2015',
+      rollupOptions: {
+        output: {
+          format: 'iife',
+          name: 'app'
+        }
+      }
+    },
     define: {
       'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY || ''),
     },
